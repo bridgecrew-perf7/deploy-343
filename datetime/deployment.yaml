@@ -7,8 +7,8 @@ services:
 
     restart: always
     ports:
-      - "9090:9090"
+      - "${PORT}:${PORT}"
     # volumes:
     # - ./wk_cert:/app/wk_cert/
     # command: ./main -certFile=./wk_cert/domain.cer -keyFile=./wk_cert/domain.key 
-    command: ./main -address ":9090"
+    command: ./main -address ":${PORT}"
