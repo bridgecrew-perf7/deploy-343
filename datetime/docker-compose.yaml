@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  citymachine-api: 
+    image: registry.cn-shanghai.aliyuncs.com/d2jvkpn/datetime:latest
+    container_name: datetime_service
+
+    restart: always
+    ports:
+      - "9090:9090"
+    # volumes:
+    # - ./wk_cert:/app/wk_cert/
+    # command: ./main -certFile=./wk_cert/domain.cer -keyFile=./wk_cert/domain.key 
+    command: ./main -address ":9090"

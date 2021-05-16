@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  shiori:
+    image: radhifadlillah/shiori:latest
+    container_name: shiori_service
+    restart: always
+    network_mode: bridge
+    ports:
+      - 2041:8080
+    volumes:
+      - $HOME/Work/docker/shiori/:/srv/shiori/
+    environment:
+      - TZ=Asia/Shanghai
+
+# default username and password: shiori, gopher

@@ -7,9 +7,9 @@ services:
     restart: always
     network_mode: bridge
     volumes:
-      - $HOME/Work/database/mysql/my.cnf:/etc/mysql/my.cnf
-      - $HOME/Work/database/mysql/data:/var/lib/mysql/
-      - $HOME/Work/database/mysql:/mnt/work
+      - $HOME/Work/docker/mysql/my.cnf:/etc/mysql/my.cnf
+      - $HOME/Work/docker/mysql/data:/var/lib/mysql/
+      - $HOME/Work/docker/mysql:/mnt/work
     # environment:
     #   - MYSQL_ROOT_PASSWORD=xx
     #   - TZ=Asia/Shanghai
