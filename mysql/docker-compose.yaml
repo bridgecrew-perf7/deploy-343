@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:8
+    container_name: mysql_service
+    restart: always
+    network_mode: bridge
+    volumes:
+      - $HOME/Work/database/mysql/my.cnf:/etc/mysql/my.cnf
+      - $HOME/Work/database/mysql/data:/var/lib/mysql/
+      - $HOME/Work/database/mysql:/mnt/work
+    # environment:
+    #   - MYSQL_ROOT_PASSWORD=xx
+    #   - TZ=Asia/Shanghai
