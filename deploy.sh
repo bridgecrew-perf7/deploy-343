@@ -2,9 +2,9 @@
 set -eu -o pipefail
 
 ## pull lastest images
-yq -r ".services | .[] | .image" docker-compose.yaml |
-    awk '$1!~":local$"' | xargs -i docker pull {}
-
+# yq -r ".services | .[] | .image" docker-compose.yaml |
+#     awk '$1!~":local$"' | xargs -i docker pull {}
+docker-compose pull
 if [ -f "./docker.env" ]; then
     docker-compose --env-file ./docker.env up -d
 else
