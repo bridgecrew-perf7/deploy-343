@@ -7,7 +7,7 @@ services:
     restart: always
     network_mode: bridge
     ports:
-      - 2041:8080
+      - ${PORT}:8080
     volumes:
       - $HOME/Work/docker/shiori/:/srv/shiori/
     environment:
