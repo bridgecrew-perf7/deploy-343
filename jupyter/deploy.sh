@@ -1,8 +1,8 @@
 #! /usr/bin/env bash
 set -eu -o pipefail
 
-#### deploy
-export PORT=$1
+export JUPYTER_Port=$1
+export JUPYTER_Password=$2
 envsubst < $(dirname $0)/deployment.yaml > docker-compose.yaml
 
 docker-compose pull

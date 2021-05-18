@@ -5,6 +5,7 @@ services:
     image: registry.cn-shanghai.aliyuncs.com/d2jvkpn/datetime:latest
     container_name: datetime_service
     restart: always
+    network_mode: bridge
     ports:
       - "${PORT}:${PORT}"
     # volumes:

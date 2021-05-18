@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  jupyter:
+    image: registry.cn-shanghai.aliyuncs.com/d2jvkpn/jupyter:latest
+    container_name: jupyter_latest_service
+    restart: always
+    network_mode: bridge
+    ports:
+      - "${JUPYTER_Port}:${JUPYTER_Port}"
+    volumes:
+      - $HOME/Work/docker/jupyter:/mnt/work
+    environment:
+      - TZ=Asia/Shanghai
+      - JUPYTER_Port=${JUPYTER_Port}
+      - JUPYTER_Password=${JUPYTER_Password}

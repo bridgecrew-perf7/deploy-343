@@ -1,5 +1,4 @@
-docker.env
 wk*/
 main
 
-datetime/docker-compose.yaml
+docker-compose.yaml

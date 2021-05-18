@@ -10,6 +10,6 @@ services:
       - $HOME/Work/docker/mysql/my.cnf:/etc/mysql/my.cnf
       - $HOME/Work/docker/mysql/data:/var/lib/mysql/
       - $HOME/Work/docker/mysql:/mnt/work
-    # environment:
-    #   - MYSQL_ROOT_PASSWORD=xx
-    #   - TZ=Asia/Shanghai
+    environment:
+      - TZ=Asia/Shanghai
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
