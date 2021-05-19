@@ -7,10 +7,11 @@ services:
     restart: always
     network_mode: bridge
     ports:
-      - ${PORT}:8080
+      - ${PORT}:${PORT}
     volumes:
       - $HOME/Work/docker/shiori/:/srv/shiori/
     environment:
       - TZ=Asia/Shanghai
+    command: shiori serve --port ${PORT}
 
 # default username and password: shiori, gopher
