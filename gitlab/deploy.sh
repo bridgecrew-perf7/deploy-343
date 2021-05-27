@@ -4,7 +4,7 @@ set -eu -o pipefail
 export HTTP_Port=$1
 export SSH_Port=$2
 export DOMAIN=$3
-export HOM=$HOME
+export HOME=$HOME
 
 # gitlab work path: $HOME/Work/docker/gitlab
 # nginx work path: $HOME/Work/nginx
