@@ -17,6 +17,9 @@ services:
     environment:
       TZ: Asia/Shanghai
       GITLAB_OMNIBUS_CONFIG: |
-        external_url '${DOMAIN}'
-        gitlab_rails['gitlab_shell_ssh_port'] = ${HTTP_Port}
+        gitlab_rails['gitlab_shell_ssh_port'] = ${SSH_Port}
         letsencrypt['enabled'] = false
+    ##>>> inner nginx
+    # nginx['enable'] = true
+    # nginx['listen_https'] = false
+    # nginx['redirect_http_to_https'] = false

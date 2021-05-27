@@ -15,6 +15,7 @@ nginx -t && nginx -s reload
 
 ####
 mkdir -p $HOME/Work/docker/gitlab/{config,data,log}
+##!! not https:://
 echo -e "\nexternal_url \"http://$DOMAIN\"" >> $HOME/Work/docker/gitlab/config/gitlab.rb
 
 envsubst < deployment.yaml > docker-compose.yaml
