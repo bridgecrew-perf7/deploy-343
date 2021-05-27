@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:13.12.1-ce.0
+    container_name: gitlab_service
+    restart: always
+    network_mode: bridge
+    ports:
+      - "${HTTP_Port}:80"
+      - "${SSH_Port}:22"
+    volumes:
+      - $HOME/Work/docker/gitlab/config:/etc/gitlab
+      - $HOME/Work/docker/gitlab/log:/var/log/gitlab
+      - $HOME/Work/docker/gitlab/data:/var/opt/gitlab
+      - $HOME/Work/docker/gitlab:/mnt/work
+    environment:
+      TZ: Asia/Shanghai
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url '${DOMAIN}'
+        gitlab_rails['gitlab_shell_ssh_port'] = ${HTTP_Port}
+        letsencrypt['enabled'] = false
