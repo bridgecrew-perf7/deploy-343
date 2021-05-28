@@ -1,5 +1,5 @@
 upstream gitlab {
-	server 127.0.0.1:${HTTP_Port};
+    server 127.0.0.1:${HTTP_Port};
 }
 
 server {
@@ -11,18 +11,18 @@ server {
 
     ssl_certificate      /${HOME}/Work/nginx/cert/${DOMAIN}.cer;
     ssl_certificate_key  /${HOME}/Work/nginx/cert/${DOMAIN}.key;
-	ssl_ciphers          ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
-	ssl_protocols        TLSv1.2 TLSv1.3;
+    ssl_ciphers          ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+    ssl_protocols        TLSv1.2 TLSv1.3;
 
-	ssl_prefer_server_ciphers  on;
+    ssl_prefer_server_ciphers  on;
     ssl_session_cache          shared:SSL:1m;
     ssl_session_timeout        5m;
 
     access_log  /${HOME}/Work/nginx/log/gitlab.log;
     error_log   /${HOME}/Work/nginx/log/error_gitlab.log;
     gzip        on;
-	client_max_body_size     12m;
-	client_body_buffer_size  16k;
+    client_max_body_size     12m;
+    client_body_buffer_size  16k;
 
     location / {
         proxy_pass             http://gitlab;
@@ -38,7 +38,7 @@ server {
         proxy_set_header       X-Forwarded-Proto  $scheme;
     }
 
-	if ($host != "${DOMAIN}") {
-		return 404;
-	}
+    if ($host != "${DOMAIN}") {
+        return 404;
+    }
 }
