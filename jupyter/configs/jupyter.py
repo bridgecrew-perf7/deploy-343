@@ -8,7 +8,7 @@ if port == "" or password == "":
     sys.exit("JUPYTER_Port or JUPYTER_Password is unset.")
 
 # dirpath = os.path.dirname(os.path.abspath(sys.argv[0]))
-dirpath=os.getcwd()
+dirpath = os.getcwd()
 
 ret = subprocess.run(["jupyter", "notebook", "--generate-config", "-y"])
 if ret.returncode != 0: sys.exit(1)

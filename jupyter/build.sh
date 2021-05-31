@@ -5,7 +5,7 @@ docker pull centos:7
 
 image="registry.cn-shanghai.aliyuncs.com/d2jvkpn/jupyter:latest"
 docker build --no-cache -t $image .
-docker push $image
+sudo docker push $image
 
 exit
 
