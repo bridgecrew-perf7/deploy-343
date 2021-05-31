@@ -2,3 +2,6 @@ wk*/
 main
 
 docker-compose.yaml
+
+/registry/auth
+/registry/certs
