@@ -2,9 +2,6 @@
 set -eu -o pipefail
 
 # cron: 0 0 1 * *
-{
-  date +">>> %FT%T%z"
-
 # $ crontab -e
 # *	minute, 0-59
 # *	hour, 0-23
@@ -14,6 +11,10 @@ set -eu -o pipefail
 
 # append new line
 # $ crontab -l
+
+{
+  date +">>> %FT%T%z"
+
   yesterday=$(date -d 'yesterday' '+%Y-%m-%d')
   pid=$(cat /var/run/nginx.pid)
 
