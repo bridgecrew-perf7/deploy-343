@@ -36,8 +36,8 @@ server {
 		proxy_set_header       X-Forwarded-Proto  $scheme;
     }
 
-	ssl_certificate      /${HOME}/Work/nginx/cert/${DOMAIN}.cer;
-	ssl_certificate_key  /${HOME}/Work/nginx/cert/${DOMAIN}.key;
+	ssl_certificate      /${HOME}/Work/nginx/cert/domain.cer;
+	ssl_certificate_key  /${HOME}/Work/nginx/cert/domain.key;
 	ssl_session_cache    shared:SSL:1m;
 	ssl_session_timeout  5m;
 	ssl_protocols        TLSv1.2 TLSv1.3;
