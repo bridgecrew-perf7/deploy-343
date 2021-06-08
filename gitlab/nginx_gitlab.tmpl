@@ -14,7 +14,7 @@ server {
 	charset        utf-8;
 	server_tokens  off;
 
-	access_log  /${HOME}/Work/nginx/log/gitlab.log        logfmt2;
+	access_log  /${HOME}/Work/nginx/log/gitlab.log        logfmt3;
 	error_log   /${HOME}/Work/nginx/log/error_gitlab.log;
 	gzip        on;
 
@@ -34,6 +34,7 @@ server {
 		proxy_set_header       X-Forwarded-Ssl    on;
 		proxy_set_header       X-Forwarded-For    $proxy_add_x_forwarded_for;
 		proxy_set_header       X-Forwarded-Proto  $scheme;
+		proxy_set_header       X-Request-Id       $request_id;
     }
 
 	ssl_certificate      /${HOME}/Work/nginx/cert/domain.cer;
