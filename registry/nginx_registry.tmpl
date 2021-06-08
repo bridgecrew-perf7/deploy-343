@@ -14,18 +14,19 @@ server {
 
 	client_max_body_size 6114m; # 6GB
 
-	access_log  /${HOME}/Work/nginx/log/registry.log        logfmt2;
+	access_log  /${HOME}/Work/nginx/log/registry.log        logfmt3;
 	error_log   /${HOME}/Work/nginx/log/error_registry.log;
 	gzip        on;
 
 
 	location / {
-		proxy_pass                          https://localhost:${PORT};
-		proxy_set_header  Host              $http_host;   # required for docker client's sake
-		proxy_set_header  X-Real-IP         $remote_addr; # pass on real client's IP
-		proxy_set_header  X-Forwarded-For   $proxy_add_x_forwarded_for;
-		proxy_set_header  X-Forwarded-Proto $scheme;
-		proxy_read_timeout                  900;
+		proxy_pass          https://localhost:${PORT};
+		proxy_set_header    Host                        $http_host;   # required for docker client's sake
+		proxy_set_header    X-Real-IP                   $remote_addr; # pass on real client's IP
+		proxy_set_header    X-Forwarded-For             $proxy_add_x_forwarded_for;
+		proxy_set_header    X-Forwarded-Proto           $scheme;
+		proxy_set_header    X-Request-Id                $request_id;
+		proxy_read_timeout  900;
 	}
 
     # Do not allow connections from docker 1.5 and earlier

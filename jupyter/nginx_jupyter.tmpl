@@ -15,7 +15,7 @@ server {
 	charset        utf-8;
 	server_tokens  off;
 
-	access_log  /root/Work/nginx/log/jupyter.log         logfmt2;
+	access_log  /root/Work/nginx/log/jupyter.log         logfmt3;
 	error_log   /root/Work/nginx/log/error_jupyter.log;
 	gzip        on;
 
@@ -31,6 +31,7 @@ server {
 		proxy_set_header       X-Real-IP           $remote_addr;
 		proxy_set_header       Host                $host;
 		real_ip_header         X-Real-IP;
+		proxy_set_header       X-Request-Id        $request_id;
 		proxy_connect_timeout  600;
 		proxy_send_timeout     600;
 		proxy_read_timeout     600;
