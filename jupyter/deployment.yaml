@@ -9,7 +9,7 @@ services:
     ports:
       - "${JUPYTER_Port}:${JUPYTER_Port}"
     volumes:
-      - $HOME/Work/docker/jupyter:/mnt/work
+      - $HOME/Work/docker/jupyter/data:/mnt/work
     environment:
       - TZ=Asia/Shanghai
       - JUPYTER_Port=${JUPYTER_Port}
