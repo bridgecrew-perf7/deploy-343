@@ -39,16 +39,3 @@ docker run --detach           \
   server/app.js
 # default account: admin@admin.com
 # default password: ymfe.org
-
-docker cp yapi:/api api
-docker rm -f yapi_service
-
-docker run --detach           \
-  --name=yapi_service         \
-  --restart=always            \
-  --link yapi_mongo:mongo     \
-  --publish=${HTTP_Port}:3000 \
-  --volume=$PWD/api:/api      \
-  --workdir=/api/vendors      \
-  registry.cn-hangzhou.aliyuncs.com/anoy/yapi \
-  server/app.js
