@@ -5,7 +5,8 @@ wd=$(pwd)
 
 PORT=$1
 
-docker run --rm --detach    \
+docker run --detach         \
   --name excalidraw_service \
+  --restart=always          \
   --publish=${PORT}:80      \
   excalidraw/excalidraw:latest
