@@ -3,7 +3,7 @@ set -eu -o pipefail
 
 docker pull centos:7
 
-image="registry.cn-shanghai.aliyuncs.com/d2jvkpn/jupyter:latest"
+image="registry.cn-shanghai.aliyuncs.com/d2jvkpn/jupyter_centos7:latest"
 docker build --no-cache -t $image .
 sudo docker push $image
 

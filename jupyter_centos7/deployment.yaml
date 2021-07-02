@@ -2,7 +2,7 @@ version: '3'
 
 services:
   jupyter:
-    image: registry.cn-shanghai.aliyuncs.com/d2jvkpn/jupyter:latest
+    image: registry.cn-shanghai.aliyuncs.com/d2jvkpn/jupyter_centos7:latest
     container_name: jupyter_latest_service
     restart: always
     network_mode: bridge
