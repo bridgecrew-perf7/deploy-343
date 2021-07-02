@@ -4,10 +4,10 @@ ENV TZ="Asia/Shanghai"
 
 #### config
 RUN mkdir -p /root/.config/pip/
-COPY configs/pip.conf         /root/.config/pip/pip.conf
-COPY configs/requirements.txt /root/requirements.txt
-COPY configs/jupyter.py       /root/jupyter.py
-COPY configs/run.sh           /root/run.sh
+COPY configs/pip.conf          /root/.config/pip/pip.conf
+COPY configs/requirements.txt  /root/requirements.txt
+COPY configs/jupyter.py        /root/jupyter.py
+COPY configs/entrypoint.sh     /root/entrypoint.sh
 
 COPY configs/bashrc /opt/bashrc
 RUN echo "test -s /opt/bashrc && source /opt/bashrc" >> /etc/bashrc && \
@@ -42,4 +42,4 @@ RUN umask 022; pip3 install --no-cache --upgrade pip  && \
 WORKDIR /mnt/work
 
 # EXPOSE 9000
-CMD ["bash", "/root/run.sh"]
+CMD ["bash", "/root/entrypoint.sh"]
