@@ -13,8 +13,8 @@ services:
       REGISTRY_AUTH: htpasswd
       REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
       REGISTRY_AUTH_HTPASSWD_PATH: /mnt/auth/htpasswd
-      REGISTRY_HTTP_TLS_CERTIFICATE: /mnt/cert/${DOMAIN}.cer
-      REGISTRY_HTTP_TLS_KEY: /mnt/cert/${DOMAIN}.key
+      REGISTRY_HTTP_TLS_CERTIFICATE: /mnt/cert/domain.cer
+      REGISTRY_HTTP_TLS_KEY: /mnt/cert/domain.key
     volumes:
       - ./data:/mnt/data
       - ./auth:/mnt/auth

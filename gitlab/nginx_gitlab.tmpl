@@ -47,8 +47,7 @@ server {
 
 	ssl_ciphers          ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
 
-
-	if ($host != "${DOMAIN}") {
-		return 404;
-	}
+	# if ($host != "${DOMAIN}") {
+	#	return 404;
+	# }
 }
