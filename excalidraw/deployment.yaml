@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  excalidraw:
+    image: excalidraw/excalidraw:latest
+    container_name: excalidraw_service
+    restart: always
+    network_mode: bridge
+    ports:
+      - "${HTTP_Port}:80"
