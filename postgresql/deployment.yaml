@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:13.3
+    container_name: postgres_service
+    restart: always
+    network_mode: bridge
+    ports:
+      - "127.0.0.1:${PORT}:5432"
+    volumes:
+      - $HOME/Work/docker/postgres/data:/var/lib/postgresql/data
+    environment:
+      - TZ=Asia/Shanghai
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
