@@ -12,7 +12,7 @@ services:
     network_mode: bridge
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     volumes:
-      - ./database:/var/lib/mysql
+      - ./db:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
@@ -29,7 +29,7 @@ services:
     links:
       - db
     volumes:
-      - ./nextcloud:/var/www/html
+      - ./app:/var/www/html
     environment:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_DATABASE=nextcloud
