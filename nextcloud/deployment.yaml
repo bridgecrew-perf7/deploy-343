@@ -20,7 +20,7 @@ services:
       - MYSQL_USER=nextcloud
 
   app:
-    image: nextcloud:latest
+    image: nextcloud:22-apache
     container_name: nextcloud_app_service
     restart: always
     network_mode: bridge
