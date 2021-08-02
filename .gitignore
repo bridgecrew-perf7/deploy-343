@@ -3,6 +3,8 @@ main
 
 docker-compose.yaml
 
+target
+
 /registry/auth
 /registry/data
 /registry/cert
