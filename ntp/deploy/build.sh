@@ -18,7 +18,7 @@ docker build -f $path/Dockerfile --no-cache -t "$image" .
 docker image prune --force --filter label=stage=ntp_builder
 
 for img in $(docker images $name --filter=dangling=true --quiet); do
-  docker rmi $img || true
+    docker rmi $img || true
 done
 
 #### push to registry
