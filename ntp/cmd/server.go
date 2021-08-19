@@ -12,6 +12,7 @@ import (
 func NewServerCmd(name string) (command *cobra.Command) {
 	var (
 		port int64
+		ip   string
 		fSet *pflag.FlagSet
 	)
 
@@ -25,7 +26,7 @@ func NewServerCmd(name string) (command *cobra.Command) {
 				log.Fatalln("not server port provided")
 			}
 
-			addr := fmt.Sprintf(":%d", port)
+			addr := fmt.Sprintf("%s:%d", ip, port)
 			ser, err := misc.NewNetworkTimeServer(addr, 10)
 			if err != nil {
 				log.Fatalln(err)
@@ -38,6 +39,7 @@ func NewServerCmd(name string) (command *cobra.Command) {
 
 	fSet = command.Flags()
 	fSet.Int64Var(&port, "port", 8080, "http server port")
+	fSet.StringVar(&ip, "ip", "", "http server ip")
 
 	return command
 }
