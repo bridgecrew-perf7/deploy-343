@@ -10,7 +10,7 @@ PORT="$2"
 # docker pull $image
 export TAG=${TAG}
 export PORT=${PORT}
-envsubst < $path/deployment.yaml > docker-compose.yaml
+envsubst < $path/deploy.yaml > docker-compose.yaml
 
 docker-compose pull
 docker-compose up -d

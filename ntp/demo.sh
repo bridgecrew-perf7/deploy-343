@@ -10,6 +10,6 @@ go run main.go client --addr http://127.0.0.1:8080 --delay 10
 
 
 ## 2
-sh deployment/build.sh latest
+sh deploy/build.sh latest
 
-sh deployment/deploy.sh latest 1024
+sh deploy/deploy.sh latest 1024
