@@ -8,4 +8,4 @@ services:
     network_mode: bridge
     ports:
       - "${PORT}:${PORT}"
-    command: /app/main server --port ${PORT}
+    command: ./main server --port ${PORT}
