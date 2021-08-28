@@ -11,11 +11,9 @@ import (
 
 func NewClientCmd(name string) (command *cobra.Command) {
 	var (
-		delay  int64
-		addr   string
-		err    error
-		fSet   *pflag.FlagSet
-		result *misc.NetworkTimeResult
+		delay int64
+		addr  string
+		fSet  *pflag.FlagSet
 	)
 
 	command = &cobra.Command{
@@ -24,6 +22,11 @@ func NewClientCmd(name string) (command *cobra.Command) {
 		Long:  `network time protocol client`,
 
 		Run: func(cmd *cobra.Command, args []string) {
+			var (
+				err    error
+				result *misc.NetworkTimeResult
+			)
+
 			if addr == "" {
 				log.Fatalf("invalid addr: %q\n", addr)
 			}
