@@ -6,6 +6,5 @@ services:
     container_name: ntp_service
     restart: always
     network_mode: bridge
-    ports:
-      - "${PORT}:${PORT}"
+    ports: "${PORT}:${PORT}"
     command: ./main server --port ${PORT}

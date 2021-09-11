@@ -5,6 +5,6 @@ services:
     image: excalidraw/excalidraw:latest
     container_name: excalidraw_service
     restart: always
+
     network_mode: bridge
-    ports:
-      - "${HTTP_Port}:80"
+    ports: ["${HTTP_Port}:80"]

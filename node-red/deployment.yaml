@@ -6,5 +6,4 @@ services:
     container_name: node-red_service
     restart: always
     network_mode: bridge
-    ports:
-      - "${HTTP_Port}:1880"
+    ports: ["${HTTP_Port}:1880"]

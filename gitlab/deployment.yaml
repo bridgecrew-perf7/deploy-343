@@ -5,15 +5,16 @@ services:
     image: gitlab/gitlab-ce:13.12.1-ce.0
     container_name: gitlab_service
     restart: always
+
     network_mode: bridge
-    ports:
-      - "${HTTP_Port}:80"
-      - "${SSH_Port}:22"
+    ports: ["${HTTP_Port}:80", "${SSH_Port}:22"]
+
     volumes:
-      - $HOME/Work/docker/gitlab/config:/etc/gitlab
-      - $HOME/Work/docker/gitlab/log:/var/log/gitlab
-      - $HOME/Work/docker/gitlab/data:/var/opt/gitlab
-      - $HOME/Work/docker/gitlab:/mnt/work
+    - $HOME/Work/docker/gitlab/config:/etc/gitlab
+    - $HOME/Work/docker/gitlab/log:/var/log/gitlab
+    - $HOME/Work/docker/gitlab/data:/var/opt/gitlab
+    - $HOME/Work/docker/gitlab:/mnt/work
+
     environment:
       # https://docs.gitlab.com/omnibus/settings/memory_constrained_envs.html
       GITLAB_OMNIBUS_CONFIG: |

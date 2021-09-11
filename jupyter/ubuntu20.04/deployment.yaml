@@ -5,12 +5,14 @@ services:
     image: registry.cn-shanghai.aliyuncs.com/d2jvkpn/jupyter:ubuntu20.04
     container_name: jupyter_service
     restart: always
+
     network_mode: bridge
-    ports:
-      - "${JUPYTER_Port}:${JUPYTER_Port}"
+    ports: ["${JUPYTER_Port}:${JUPYTER_Port}"]
+
     volumes:
-      - $HOME/Work/docker/jupyter/data:/mnt/work
+    - $HOME/Work/docker/jupyter/data:/mnt/work
+
     environment:
-      - TZ=Asia/Shanghai
-      - JUPYTER_Port=${JUPYTER_Port}
-      - JUPYTER_Password=${JUPYTER_Password}
+    - TZ=Asia/Shanghai
+    - JUPYTER_Port=${JUPYTER_Port}
+    - JUPYTER_Password=${JUPYTER_Password}
