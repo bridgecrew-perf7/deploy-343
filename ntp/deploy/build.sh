@@ -17,7 +17,7 @@ docker build -f $path/Dockerfile --no-cache -t "$image" .
 
 docker image prune --force --filter label=stage=ntp_builder
 
-for img in $(docker images $name --filter=dangling=true --quiet); do
+for img in $(docker images --filter=dangling=true --quiet $name); do
     docker rmi $img || true
 done
 
