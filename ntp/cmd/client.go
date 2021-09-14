@@ -41,7 +41,7 @@ func NewClientCmd(name string) (command *cobra.Command) {
 
 	fSet = command.Flags()
 	fSet.StringVar(&addr, "addr", "", "request addres")
-	fSet.Int64Var(&delay, "delay", 10, "delay in millsec")
+	fSet.Int64Var(&delay, "delay", 1000, "delay in millsec")
 
 	return command
 }
