@@ -39,6 +39,9 @@ cp mysql-connector-java-8.0.27/mysql-connector-java-8.0.27.jar /opt/atlassian/ji
 cp mysql-connector-java-8.0.27/mysql-connector-java-8.0.27.jar /opt/atlassian/jira/lib/
 
 /opt/atlassian/confluence/bin/start-confluence.sh
+
+rm ./atlassian-jira-software-8.17.1-x64.bin ./atlassian-confluence-7.13.1-x64.bin
+rm -f mysql-connector-java-8.0.27*
 """
 
 exit
