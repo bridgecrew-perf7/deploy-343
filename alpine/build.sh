@@ -20,3 +20,5 @@ docker push $image
 for img in $(docker images --filter=dangling=true --quiet $name); do
     docker rmi $img
 done
+
+docker push $image
