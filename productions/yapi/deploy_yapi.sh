@@ -37,5 +37,6 @@ docker run --detach           \
   --workdir /api/vendors      \
   registry.cn-hangzhou.aliyuncs.com/anoy/yapi \
   server/app.js
+
 # default account: admin@admin.com
 # default password: ymfe.org
