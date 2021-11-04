@@ -6,7 +6,8 @@ services:
     container_name: jupyter_service
     restart: always
 
-    network_mode: bridge
+    # network_mode: bridge
+    networks: ["jupyter"]
     ports: ["${JUPYTER_Port}:${JUPYTER_Port}"]
 
     volumes:
@@ -16,3 +17,6 @@ services:
     - TZ=Asia/Shanghai
     - JUPYTER_Port=${JUPYTER_Port}
     - JUPYTER_Password=${JUPYTER_Password}
+
+networks:
+  jupyter: {name: "jupyter", driver: "bridge"}

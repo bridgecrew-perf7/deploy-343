@@ -6,7 +6,8 @@ services:
     container_name: gitlab_service
     restart: always
 
-    network_mode: bridge
+    # network_mode: bridge
+    networks: ["gitlab"]
     ports: ["${HTTP_Port}:80", "${SSH_Port}:22"]
 
     volumes:
@@ -28,3 +29,6 @@ services:
     # nginx['enable'] = true
     # nginx['listen_https'] = false
     # nginx['redirect_http_to_https'] = false
+
+networks:
+  gitlab: {name: "gitlab", driver: "bridge"}

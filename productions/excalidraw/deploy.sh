@@ -12,7 +12,7 @@ cd $td
 docker-compose pull
 docker-compose up -d
 
-docker logs excalidraw_service
+docker logs excalidraw
 
 xdg-open http://localhost:$HTTP_Port
 

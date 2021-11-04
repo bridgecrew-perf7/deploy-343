@@ -6,6 +6,6 @@ docker-compose.yaml
 target
 .ipynb*/
 
-/registry/auth
-/registry/data
-/registry/cert
+*/registry/auth
+*/registry/data
+*/registry/cert
