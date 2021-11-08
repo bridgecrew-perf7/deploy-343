@@ -3,7 +3,7 @@ version: '3'
 services:
   jupyter:
     image: registry.cn-shanghai.aliyuncs.com/d2jvkpn/jupyter:centos7
-    container_name: jupyter_service
+    container_name: jupyter_app
     restart: always
 
     # network_mode: bridge

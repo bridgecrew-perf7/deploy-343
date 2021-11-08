@@ -3,7 +3,7 @@ version: '3'
 services:
   excalidraw:
     image: excalidraw/excalidraw:latest
-    container_name: excalidraw
+    container_name: excalidraw_app
     restart: always
 
     # network_mode: bridge

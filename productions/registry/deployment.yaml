@@ -3,7 +3,7 @@ version: '3'
 services:
   registry:
     image: registry:2
-    container_name: registry_service
+    container_name: registry_app
     restart: always
 
     # network_mode: bridge

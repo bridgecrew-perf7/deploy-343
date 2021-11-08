@@ -3,13 +3,15 @@ version: '3'
 services:
   shiori:
     image: radhifadlillah/shiori:latest
-    container_name: shiori_service
+    container_name: shiori_app
     restart: always
-    network_mode: bridge
+    networks: ["shiori"]
     ports: ["${PORT}:${PORT}"]
     volumes:
     - $HOME/Work/docker/shiori/data:/srv/shiori/
     environment: ["TZ=Asia/Shanghai"]
     command: shiori serve --port ${PORT}
 
+networks:
+  shiori: {name: "shiori", driver: "bridge"}
 # default username and password: shiori, gopher

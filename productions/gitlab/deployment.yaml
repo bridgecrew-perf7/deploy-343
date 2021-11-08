@@ -3,7 +3,7 @@ version: '3'
 services:
   gitlab:
     image: gitlab/gitlab-ce:13.12.1-ce.0
-    container_name: gitlab_service
+    container_name: gitlab_app
     restart: always
 
     # network_mode: bridge
