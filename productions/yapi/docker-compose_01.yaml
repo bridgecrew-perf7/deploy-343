@@ -3,7 +3,7 @@ version: '3'
 services:
   mongo:
     image: mongo:4
-    container_name: yapi_mongo
+    container_name: yapi_db
     restart: always
     volumes: ["./wk_data/mongo:/data/db"]
     networks: ["yapi"]
