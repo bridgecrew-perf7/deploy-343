@@ -31,7 +31,7 @@ services:
     # links: ["db"]
     # network_mode: bridge
     networks: ["nextcloud"]
-    ports: ["${PORT}:80"]
+    ports: ["127.0.0.1:${PORT}:80"]
 
     volumes: ["./data:/var/www/html"]
 

@@ -7,7 +7,7 @@ services:
     restart: always
 
     network_mode: bridge
-    ports: ["${JUPYTER_Port}:${JUPYTER_Port}"]
+    ports: ["127.0.0.1:${JUPYTER_Port}:${JUPYTER_Port}"]
 
     volumes:
     - $HOME/Work/docker/jupyter/data:/mnt/work
