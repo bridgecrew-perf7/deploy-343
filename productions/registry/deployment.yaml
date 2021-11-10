@@ -11,12 +11,12 @@ services:
     ports: ["127.0.0.1:${PORT}:5000"]
 
     environment:
-    - REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /mnt/data
-    - REGISTRY_AUTH: htpasswd
-    - REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
-    - REGISTRY_AUTH_HTPASSWD_PATH: /mnt/auth/htpasswd
-    - REGISTRY_HTTP_TLS_CERTIFICATE: /mnt/cert/domain.cer
-    - REGISTRY_HTTP_TLS_KEY: /mnt/cert/domain.key
+    - REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY=/mnt/data
+    - REGISTRY_AUTH=htpasswd
+    - REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm
+    - REGISTRY_AUTH_HTPASSWD_PATH=/mnt/auth/htpasswd
+    - REGISTRY_HTTP_TLS_CERTIFICATE=/mnt/cert/domain.cer
+    - REGISTRY_HTTP_TLS_KEY=/mnt/cert/domain.key
 
     volumes:
     - ./data:/mnt/data
