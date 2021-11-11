@@ -17,8 +17,5 @@ docker build -f ./Dockerfile --no-cache -t "$image" .
 ####
 docker push $image
 
-for img in $(docker images --filter=dangling=true --quiet $name); do
-    docker rmi $img
-done
-
-docker push $image
+imgs=$(docker images --filter=dangling=true --quiet $name)
+[[ -z "$imgs" ]] || docker rmi $imgs
