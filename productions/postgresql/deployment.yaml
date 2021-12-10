@@ -2,13 +2,13 @@ version: '3'
 
 services:
   postgres:
-    image: postgres:13.3
+    image: postgres:14
     container_name: postgres_db
     restart: always
 
     # network_mode: bridge
     networks: ["postgres"]
-    ports: "127.0.0.1:${PORT}:5432"
+    ports: ["127.0.0.1:${PORT}:5432"]
 
     volumes:
     - $HOME/Work/docker/postgres/data:/var/lib/postgresql/data
