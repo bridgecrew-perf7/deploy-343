@@ -11,10 +11,10 @@ services:
     ports: ["127.0.0.1:${HTTP_Port}:80", "${SSH_Port}:22"]
 
     volumes:
-    - $HOME/Work/docker/gitlab/config:/etc/gitlab
-    - $HOME/Work/docker/gitlab/log:/var/log/gitlab
-    - $HOME/Work/docker/gitlab/data:/var/opt/gitlab
-    - $HOME/Work/docker/gitlab:/mnt/work
+    - $HOME/Work/docker/gitlab/config:/etc/gitlab:Z
+    - $HOME/Work/docker/gitlab/log:/var/log/gitlab:Z
+    - $HOME/Work/docker/gitlab/data:/var/opt/gitlab:Z
+    - $HOME/Work/docker/gitlab/backups:/var/opt/gitlab/backups:Z
 
     environment:
       # https://docs.gitlab.com/omnibus/settings/memory_constrained_envs.html

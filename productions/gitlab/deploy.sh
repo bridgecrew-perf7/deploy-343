@@ -14,7 +14,7 @@ envsub < nginx_gitlab.tmpl> $HOME/Work/nginx/conf/nginx_gitlab.conf
 nginx -t && nginx -s reload
 
 ####
-mkdir -p $HOME/Work/docker/gitlab/{config,data,log}
+mkdir -p $HOME/Work/docker/gitlab/{config,data,log,backups}
 ##!! not https:://
 echo -e "\nexternal_url \"http://$DOMAIN\"" >> $HOME/Work/docker/gitlab/config/gitlab.rb
 
