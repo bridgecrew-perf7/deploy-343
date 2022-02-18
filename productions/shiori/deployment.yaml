@@ -8,7 +8,7 @@ services:
     networks: ["shiori"]
     ports: ["127.0.0.1:${PORT}:${PORT}"]
     volumes:
-    - $HOME/Work/docker/shiori/data:/srv/shiori/
+    - ./data:/srv/shiori/
     environment: ["TZ=Asia/Shanghai"]
     command: shiori serve --port ${PORT}
 
