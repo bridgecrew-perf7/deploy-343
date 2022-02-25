@@ -22,10 +22,13 @@ envsubst < deployment.yaml > docker-compose.yaml
 docker-compose pull
 docker-compose up -d
 
-docker logs -f gitlab_service
+docker logs -f gitlab_app
+
+#### get init admin(root) password
+docker exec -it gitlab_app grep 'Password:' /etc/gitlab/initial_root_password
 
 
 ####
 # echo -e '\nexternal_url "http://gitlab.example.com"' >> $HOME/Work/docker/gitlab/config/gitlab.rb
-# docker exec gitlab_service bash -c "gitlab-ctl reconfigure && gitlab-ctl restart"
+# docker exec gitlab_app bash -c "gitlab-ctl reconfigure && gitlab-ctl restart"
 # docker-compose restart
