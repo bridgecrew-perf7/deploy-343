@@ -30,5 +30,6 @@ services:
     # nginx['listen_https'] = false
     # nginx['redirect_http_to_https'] = false
 
+## docker network create gitlab
 networks:
   gitlab: {name: "gitlab", driver: "bridge", external: true}
