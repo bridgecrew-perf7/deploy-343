@@ -6,3 +6,4 @@ services:
     container_name: app-web_${APP_ENV}
     restart: always
     ports: ["${PORT}:80"]
+    enviroment: ["PORT=80"]
