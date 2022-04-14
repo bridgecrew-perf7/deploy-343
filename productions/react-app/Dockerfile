@@ -5,4 +5,4 @@ FROM nginx:1.20-alpine
 # COPY build/ /usr/share/nginx/html
 COPY build/ /opt/app-web/build
 
-COPY app-web_nginx.conf /etc/nginx/conf.d/app-web_nginx.conf
+COPY nginx.conf /etc/nginx/conf.d/app-web_nginx.conf
