@@ -1,9 +1,9 @@
 version: "3"
 
 services:
-  web:
-    image: app-web:{TAG}
-    container_name: app-web_${APP_ENV}
+  react-web:
+    image: react-web:{TAG}
+    container_name: react-web_${APP_ENV}
     restart: always
     ports: ["${PORT}:80"]
     enviroment: ["PORT=80"]
