@@ -4,18 +4,23 @@ _wd=$(pwd)
 _path=$(dirname $0 | xargs -i readlink -f {})
 
 # https://docs.gitlab.com/omnibus/settings/memory_constrained_envs.html
+# https://forum.gitlab.com/t/gitlab-commit-500-error/53139/5
 cp config/gitlab.rb config/gitlab.rb.bk
 
 cat >> config/gitlab.rb << EOF
 ####
-puma['worker_processes'] = 0
+puma['enable'] = true
+puma['worker_timeout'] = 120
+puma['worker_processes'] = 1
+puma['per_worker_max_memory_mb'] = 1024
 
 sidekiq['max_concurrency'] = 10
 
 prometheus_monitoring['enable'] = false
 
 gitlab_rails['env'] = {
-  'MALLOC_CONF' => 'dirty_decay_ms:1000,muzzy_decay_ms:1000'
+  'MALLOC_CONF' => 'dirty_decay_ms:1000,muzzy_decay_ms:1000',
+  'GITLAB_RAILS_RACK_TIMEOUT' => 600,
 }
 
 gitaly['cgroups_count'] = 2
