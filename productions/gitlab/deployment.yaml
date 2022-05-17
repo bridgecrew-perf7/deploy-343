@@ -6,7 +6,7 @@ services:
     container_name: gitlab_app
     restart: always
     # affect gitaly
-    privileged: true
+    # privileged: true
 
     # network_mode: bridge
     networks: ["gitlab"]
