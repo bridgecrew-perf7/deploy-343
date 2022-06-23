@@ -9,3 +9,8 @@ target
 */registry/auth
 */registry/data
 */registry/cert
+
+*.out
+*.log
+logs/
+configs/

@@ -4,6 +4,7 @@ _wd=$(pwd)
 _path=$(dirname $0 | xargs -i readlink -f {})
 
 # https://gabrieltanner.org/blog/collecting-prometheus-metrics-in-golang/
+# https://prometheus.io/docs/prometheus/latest/getting_started/
 # https://hub.docker.com/r/prom/prometheus
 # https://hub.docker.com/r/grafana/grafana/tags
 
@@ -14,13 +15,13 @@ docker-compose up -d
 #### reset grafana password
 docker exec -it grafana grafana-cli admin reset-admin-password PASSWORD
 
-# http://192.168.1.1:3023
-curl http://192.168.1.1:3023/metrics
-
-# grafana url: http://192.168.1.1:3022, admin PASSWORD
-# add prometheus data source: http://192.168.1.1:3023/metrics
-
 ls -alh /var/lib/docker/volumes/go-web_grafana-storage/_data
+
+grafana_url=http://192.168.1.1:3022 # admin PASSWORD
+# add prometheus data source: $prom_url/metrics
+prom_url=http://192.168.1.1:3023
+
+curl $prom_url/metrics
 
 exit
 
@@ -29,12 +30,14 @@ exit
 
 process_cpu_seconds_total
 # process_cpu_seconds_total{instance="192.168.0.8:3023", job="prometheus"}
-
 go_goroutines
 # go_goroutines{instance="192.168.0.8:3023", job="prometheus"}
-
 go_gc_duration_seconds{quantile="0.75"}
-
 go_threads
-
 go_memstats_sys_bytes
+# process_resident_memory_bytes
+go_memstats_alloc_bytes
+
+go tool pprof -svg $prom_url/debug/pprof/heap > heap.svg.out
+
+$prom_url/graph?g0.expr=go_goroutines&g0.tab=0&g0.stacked=1&g0.show_exemplars=0&g0.range_input=1h&g1.expr=go_gc_duration_seconds%7Bquantile%3D%220.75%22%7D&g1.tab=0&g1.stacked=1&g1.show_exemplars=0&g1.range_input=1h&g1.end_input=2022-06-23%2007%3A23%3A58&g1.moment_input=2022-06-23%2007%3A23%3A58&g1.step_input=10&g2.expr=go_threads&g2.tab=0&g2.stacked=1&g2.show_exemplars=0&g2.range_input=1h&g3.expr=go_memstats_sys_bytes&g3.tab=0&g3.stacked=1&g3.show_exemplars=0&g3.range_input=1h&g4.expr=go_memstats_alloc_bytes&g4.tab=0&g4.stacked=0&g4.show_exemplars=0&g4.range_input=1h
