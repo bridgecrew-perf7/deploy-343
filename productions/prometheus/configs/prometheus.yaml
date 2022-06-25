@@ -9,7 +9,7 @@ scrape_configs:
   - targets: ['prometheus:9090']
   # - targets: ['192.168.1.1:3023']
 
-- job_name: go-web_dev
+- job_name: app_dev
   metrics_path: /prometheus
   static_configs:
-  - targets: ['192.168.1.1:3023']
+  - targets: ['192.168.1.9:8080']
