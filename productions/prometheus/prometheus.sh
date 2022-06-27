@@ -14,11 +14,11 @@ docker pull grafana/grafana:main
 docker-compose up -d
 
 #### reset grafana password
-docker exec -it grafana grafana-cli admin reset-admin-password PASSWORD
+docker exec -it grafana grafana-cli admin reset-admin-password admin
 
 ls -alh /var/lib/docker/volumes/go-web_grafana-storage/_data
 
-grafana_url=http://192.168.1.1:3022 # admin PASSWORD
+grafana_url=http://192.168.1.1:3022 # username: admin, password: admin
 # add prometheus data source: $prom_url/metrics
 prom_url=http://192.168.1.1:3023
 
@@ -41,4 +41,4 @@ go_memstats_alloc_bytes
 
 go tool pprof -svg $prom_url/debug/pprof/heap > heap.svg.out
 
-$prom_url/3023/graph?g0.expr=go_goroutines&g0.tab=0&g0.stacked=0&g0.show_exemplars=0&g0.range_input=1h&g0.step_input=5&g1.expr=go_gc_duration_seconds%7Bquantile%3D%220.75%22%7D&g1.tab=0&g1.stacked=0&g1.show_exemplars=0&g1.range_input=1h&g1.end_input=2022-06-23%2007%3A23%3A58&g1.moment_input=2022-06-23%2007%3A23%3A58&g1.step_input=5&g2.expr=go_threads&g2.tab=0&g2.stacked=0&g2.show_exemplars=0&g2.range_input=1h&g2.step_input=5&g3.expr=go_memstats_sys_bytes&g3.tab=0&g3.stacked=0&g3.show_exemplars=0&g3.range_input=1h&g3.step_input=5&g4.expr=go_memstats_alloc_bytes&g4.tab=0&g4.stacked=0&g4.show_exemplars=0&g4.range_input=1h&g4.step_input=5
+$prom_url/graph?g0.expr=go_goroutines&g0.tab=0&g0.stacked=0&g0.show_exemplars=0&g0.range_input=1h&g0.step_input=5&g1.expr=go_gc_duration_seconds%7Bquantile%3D%220.75%22%7D&g1.tab=0&g1.stacked=0&g1.show_exemplars=0&g1.range_input=1h&g1.step_input=5&g2.expr=go_threads&g2.tab=0&g2.stacked=0&g2.show_exemplars=0&g2.range_input=1h&g2.step_input=5&g3.expr=go_memstats_sys_bytes&g3.tab=0&g3.stacked=0&g3.show_exemplars=0&g3.range_input=1h&g3.step_input=5&g4.expr=go_memstats_alloc_bytes&g4.tab=0&g4.stacked=0&g4.show_exemplars=0&g4.range_input=1h&g4.step_input=5
