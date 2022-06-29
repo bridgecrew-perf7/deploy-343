@@ -3,11 +3,6 @@ set -eu -o pipefail
 _wd=$(pwd)
 _path=$(dirname $0 | xargs -i readlink -f {})
 
-# https://gabrieltanner.org/blog/collecting-prometheus-metrics-in-golang/
-# https://prometheus.io/docs/prometheus/latest/getting_started/
-# https://hub.docker.com/r/prom/prometheus
-# https://hub.docker.com/r/grafana/grafana/tags
-# https://povilasv.me/prometheus-go-metrics/
 
 docker pull prom/prometheus:main
 docker pull grafana/grafana:main
