@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+  grafana:
+    image: grafana/grafana:main
+    container_name: grafana
+    networks: [prometheus]
+    ports: ["3022:3000"]
+    volumes:
+    - grafana-storage:/var/lib/grafana
+
+  prometheus:
+    image: prom/prometheus:main
+    container_name: prometheus
+    restart: always
+    networks: [prometheus]
+    ports:
+    - 3023:9090
+    volumes:
+    - ./configs:/prometheus/configs
+    - prometheus_data:/prometheus/data
+    command:
+    # - '--config.file=/etc/prometheus/prometheus.yaml'
+    - '--storage.tsdb.path=/prometheus/data'
+    - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+    - '--web.console.templates=/usr/share/prometheus/consoles'
+    - '--config.file=/prometheus/configs/prometheus.yaml'
+    - '--web.config.file=/prometheus/configs/web.yaml'
+
+
+volumes:
+  grafana-storage:
+  prometheus_data:
+
+networks:
+  prometheus:
+    name: prometheus
+    driver: bridge
+    external: false
