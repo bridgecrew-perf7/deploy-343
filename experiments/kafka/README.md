@@ -2,9 +2,11 @@
 ---
 
 #### 
-- site:
- - https://hub.docker.com/r/bitnami/kafka/
-- pull images:
+- sites:
+  - https://hub.docker.com/r/bitnami/kafka/
+  - https://docs.confluent.io/platform/current/tutorials/examples/clients/docs/python.html
+  - https://github.com/confluentinc/examples
+- pull docker images:
 ```bash
 docker pull bitnami/kafka:3.2
 docker pull bitnami/zookeeper:3.8
@@ -13,4 +15,8 @@ docker pull bitnami/zookeeper:3.8
 ```bash
 curl -sSL https://raw.githubusercontent.com/bitnami/bitnami-docker-kafka/master/docker-compose.yml > docker-compose.yml
 docker-compose up -d
+```
+- python3
+```bash
+pip3 install -r requirements.txt
 ```
