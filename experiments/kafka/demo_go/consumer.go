@@ -32,12 +32,19 @@ func main() {
 	if topics, err = consumer.Topics(); err != nil {
 		log.Fatalln(err)
 	}
+
+	if len(topics) == 0 {
+		log.Fatalln("no topics")
+	}
 	fmt.Println("~~~ topics:", topics)
 
-	if partitions, err = consumer.Partitions("test"); err != nil {
+	if partitions, err = consumer.Partitions(topics[0]); err != nil {
 		log.Fatalln(err)
 	}
-	fmt.Println("~~~ partitions of test:", partitions)
+	if len(partitions) == 0 {
+		log.Fatalf("topics %s has no partitions\n", topics[0])
+	}
+	fmt.Printf("~~~ partitions of %s: %v\n", topics[0], partitions)
 
 	if pconsumer, err = consumer.ConsumePartition("test", 0, 0); err != nil {
 		log.Fatalln(err)
