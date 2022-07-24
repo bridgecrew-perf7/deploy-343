@@ -1,7 +1,7 @@
 package main
 
 import (
-	// "fmt"
+	"fmt"
 	"log"
 
 	"github.com/Shopify/sarama"
@@ -23,13 +23,19 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	pmsg := &sarama.ProducerMessage{
-		Topic: "test",
-		Key:   sarama.StringEncoder("e0001"),
-		Value: sarama.ByteEncoder([]byte("hello, world")),
+	for i := 0; i < 3; i++ {
+		msg := fmt.Sprintf("hello, world: %d", i)
+		fmt.Println(">>> send msg:", msg)
+
+		pmsg := &sarama.ProducerMessage{
+			Topic: "test",
+			Key:   sarama.StringEncoder("e0001"),
+			Value: sarama.ByteEncoder([]byte(msg)),
+		}
+
+		producer.Input() <- pmsg
 	}
 
-	producer.Input() <- pmsg
 	if err = producer.Close(); err != nil {
 		log.Fatalln(err)
 	}

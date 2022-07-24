@@ -14,12 +14,13 @@ func main() {
 		partitions []int32
 		err        error
 
-		config   *sarama.Config
-		consumer sarama.Consumer
+		config    *sarama.Config
+		consumer  sarama.Consumer
+		pconsumer sarama.PartitionConsumer
 	)
 
 	config = sarama.NewConfig()
-	addrs = []string{"127.0.0.1:9092"}
+	addrs = []string{"127.0.0.1:9093"}
 
 	if consumer, err = sarama.NewConsumer(addrs, config); err != nil {
 		log.Fatalln(err)
@@ -34,6 +35,16 @@ func main() {
 		log.Fatalln(err)
 	}
 	fmt.Println("~~~ partitions of test:", partitions)
+
+	if pconsumer, err = consumer.ConsumePartition("test", 0, 0); err != nil {
+		log.Fatalln(err)
+	}
+
+	for i := 0; i < 3; i++ {
+		msg := <-pconsumer.Messages() // *sarama.ConsumerMessage
+		fmt.Printf(">>> msg: %+v\n", msg)
+		fmt.Printf("    key: %s, %s\n", msg.Key, msg.Value)
+	}
 
 	if err = consumer.Close(); err != nil {
 		log.Fatalln(err)
