@@ -8,9 +8,16 @@ import (
 	"github.com/Shopify/sarama"
 )
 
+var (
+	_Addrs []string
+)
+
+func init() {
+	_Addrs = []string{"127.0.0.1:9093"}
+}
+
 func main() {
 	var (
-		addrs      []string
 		topics     []string
 		partitions []int32
 		err        error
@@ -22,10 +29,9 @@ func main() {
 	)
 
 	config = sarama.NewConfig()
-	addrs = []string{"127.0.0.1:9093"}
 	cancel = make(chan struct{})
 
-	if consumer, err = sarama.NewConsumer(addrs, config); err != nil {
+	if consumer, err = sarama.NewConsumer(_Addrs, config); err != nil {
 		log.Fatalln(err)
 	}
 
@@ -67,7 +73,7 @@ func main() {
 		}
 	}()
 
-	time.Sleep(30 * time.Second)
+	time.Sleep(15 * time.Second)
 	close(cancel)
 
 	if err = consumer.Close(); err != nil {

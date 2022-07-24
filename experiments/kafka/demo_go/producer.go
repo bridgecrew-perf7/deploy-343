@@ -7,19 +7,27 @@ import (
 	"github.com/Shopify/sarama"
 )
 
+var (
+	_Addrs []string
+	_Topic string
+)
+
+func init() {
+	_Addrs = []string{"127.0.0.1:9093"}
+	_Topic = "test"
+}
+
 func main() {
 	var (
-		addrs []string
-		err   error
+		err error
 
 		config   *sarama.Config
 		producer sarama.AsyncProducer
 	)
 
 	config = sarama.NewConfig()
-	addrs = []string{"127.0.0.1:9093"}
 
-	if producer, err = sarama.NewAsyncProducer(addrs, config); err != nil {
+	if producer, err = sarama.NewAsyncProducer(_Addrs, config); err != nil {
 		log.Fatalln(err)
 	}
 
@@ -28,7 +36,7 @@ func main() {
 		fmt.Println(">>> send msg:", msg)
 
 		pmsg := &sarama.ProducerMessage{
-			Topic: "test",
+			Topic: _Topic,
 			Key:   sarama.StringEncoder("e0001"),
 			Value: sarama.ByteEncoder([]byte(msg)),
 		}
