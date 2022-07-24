@@ -6,6 +6,7 @@
   - https://hub.docker.com/r/bitnami/kafka/
   - https://docs.confluent.io/platform/current/tutorials/examples/clients/docs/python.html
   - https://github.com/confluentinc/examples
+  - https://github.com/bitnami/containers/tree/main/bitnami/kafka
 - pull docker images:
 ```bash
 docker pull bitnami/kafka:3.2
