@@ -55,18 +55,22 @@ func main() {
 	go func() {
 		var err error
 		log.Println("==> ConsumerGroup A start")
-		// ?? for loop
-		err = group.Consume(ctx, []string{_Topic}, handler)
-		if err != nil {
-			if errors.Is(sarama.ErrClosedConsumerGroup, err) {
-				log.Println("!!! ConsumerGroup A closed")
+		for {
+			err = group.Consume(ctx, []string{_Topic}, handler)
+			if err != nil {
+				if errors.Is(sarama.ErrClosedConsumerGroup, err) {
+					log.Println("!!! ConsumerGroup A closed:", err)
+					return
+				}
+				log.Println("!!! ConsumerGroup A error:", err)
+			} else {
+				log.Println("<== ConsumerGroup A end")
+			}
+
+			if ctx.Err() != nil {
 				return
 			}
-			log.Println("!!! ConsumerGroup A error:", err)
-		} else {
-			log.Println("<== ConsumerGroup A end")
 		}
-
 	}()
 
 	go func() {
