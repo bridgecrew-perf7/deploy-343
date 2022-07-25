@@ -3,21 +3,24 @@ package main
 import (
 	"context"
 	"errors"
-	// "fmt"
+	"fmt"
 	"log"
+	"os"
 	"time"
 
 	"github.com/Shopify/sarama"
 )
 
+// TODO: ack
+
 var (
-	_Addr    []string
+	_Addrs   []string
 	_GroupId string
 	_Topic   string
 )
 
 func init() {
-	_Addr = []string{"127.0.0.1:9093"}
+	_Addrs = []string{"127.0.0.1:9093"}
 	_GroupId = "default"
 	_Topic = "test"
 }
@@ -32,11 +35,16 @@ func main() {
 		handler *CGHandler // sarama.ConsumerGroupHandler
 	)
 
+	if len(os.Args) > 1 {
+		_Addrs = os.Args[1:]
+	}
+	fmt.Println("~~~", _Addrs)
+
 	config = sarama.NewConfig()
 	config.Consumer.Return.Errors = true
 	config.Consumer.Offsets.Initial = sarama.OffsetOldest
 
-	group, err = sarama.NewConsumerGroup(_Addr, _GroupId, config)
+	group, err = sarama.NewConsumerGroup(_Addrs, _GroupId, config)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -47,6 +55,7 @@ func main() {
 	go func() {
 		var err error
 		log.Println("==> ConsumerGroup A start")
+		// ?? for loop
 		err = group.Consume(ctx, []string{_Topic}, handler)
 		if err != nil {
 			if errors.Is(sarama.ErrClosedConsumerGroup, err) {
@@ -55,7 +64,7 @@ func main() {
 			}
 			log.Println("!!! ConsumerGroup A error:", err)
 		} else {
-			log.Println("==> ConsumerGroup A end")
+			log.Println("<== ConsumerGroup A end")
 		}
 
 	}()

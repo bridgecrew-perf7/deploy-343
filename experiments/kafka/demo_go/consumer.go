@@ -1,8 +1,9 @@
 package main
 
 import (
-	// "fmt"
+	"fmt"
 	"log"
+	"os"
 	"time"
 
 	"github.com/Shopify/sarama"
@@ -27,6 +28,11 @@ func main() {
 		consumer  sarama.Consumer
 		pconsumer sarama.PartitionConsumer
 	)
+
+	if len(os.Args) > 1 {
+		_Addrs = os.Args[1:]
+	}
+	fmt.Println("~~~", _Addrs)
 
 	config = sarama.NewConfig()
 	cancel = make(chan struct{})

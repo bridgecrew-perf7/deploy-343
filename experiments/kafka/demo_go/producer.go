@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/Shopify/sarama"
 )
@@ -25,6 +26,11 @@ func main() {
 		producer sarama.AsyncProducer
 	)
 
+	if len(os.Args) > 1 {
+		_Addrs = os.Args[1:]
+	}
+	fmt.Println("~~~", _Addrs)
+
 	config = sarama.NewConfig()
 
 	if producer, err = sarama.NewAsyncProducer(_Addrs, config); err != nil {
@@ -33,7 +39,7 @@ func main() {
 
 	for i := 0; i < 3; i++ {
 		msg := fmt.Sprintf("hello, world: %d", i)
-		fmt.Println("--> send msg:", msg)
+		log.Println("--> send msg:", msg)
 
 		pmsg := &sarama.ProducerMessage{
 			Topic: _Topic,
