@@ -2,8 +2,9 @@ module x
 
 go 1.18
 
+require github.com/Shopify/sarama v1.35.0
+
 require (
-	github.com/Shopify/sarama v1.35.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/eapache/go-resiliency v1.3.0 // indirect
 	github.com/eapache/go-xerial-snappy v0.0.0-20180814174437-776d5712da21 // indirect
