@@ -33,7 +33,7 @@ func main() {
 
 	for i := 0; i < 3; i++ {
 		msg := fmt.Sprintf("hello, world: %d", i)
-		fmt.Println(">>> send msg:", msg)
+		fmt.Println("--> send msg:", msg)
 
 		pmsg := &sarama.ProducerMessage{
 			Topic: _Topic,

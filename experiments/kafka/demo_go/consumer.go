@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	// "fmt"
 	"log"
 	"time"
 
@@ -42,7 +42,7 @@ func main() {
 	if len(topics) == 0 {
 		log.Fatalln("no topics")
 	}
-	fmt.Println("~~~ topics:", topics)
+	log.Println("~~~ topics:", topics)
 
 	if partitions, err = consumer.Partitions(topics[0]); err != nil {
 		log.Fatalln(err)
@@ -50,7 +50,7 @@ func main() {
 	if len(partitions) == 0 {
 		log.Fatalf("topics %s has no partitions\n", topics[0])
 	}
-	fmt.Printf("~~~ partitions of %s: %v\n", topics[0], partitions)
+	log.Printf("~~~ partitions of %s: %v\n", topics[0], partitions)
 
 	if pconsumer, err = consumer.ConsumePartition("test", 0, 0); err != nil {
 		log.Fatalln(err)
@@ -59,14 +59,16 @@ func main() {
 	go func() {
 		mc := pconsumer.Messages() // *sarama.ConsumerMessage
 
+		tmpl := "--> msg.Timestamp=%+v, msg.Topic=%v, msg.Partition=%v, msg.Offset=%v\n" +
+			"    key: %q, value: %q\n"
+
 		for {
 			select {
 			case msg := <-mc:
-				fmt.Printf(
-					">>> msg.Timestamp=%+v, msg.Topic=%v, msg.Partition=%v, msg.Offset=%v\n",
-					msg.Timestamp, msg.Topic, msg.Partition, msg.Offset,
+				log.Printf(
+					tmpl,
+					msg.Timestamp, msg.Topic, msg.Partition, msg.Offset, msg.Key, msg.Value,
 				)
-				fmt.Printf("    key: %q, value: %q\n", msg.Key, msg.Value)
 			case <-cancel:
 				return
 			}

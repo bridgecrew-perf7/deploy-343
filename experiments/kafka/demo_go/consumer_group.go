@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"errors"
-	"fmt"
+	// "fmt"
 	"log"
 	"time"
 
@@ -46,7 +46,7 @@ func main() {
 
 	go func() {
 		var err error
-		log.Println("===> Consume start")
+		log.Println("==> ConsumerGroup A start")
 		err = group.Consume(ctx, []string{_Topic}, handler)
 		if err != nil {
 			if errors.Is(sarama.ErrClosedConsumerGroup, err) {
@@ -55,7 +55,7 @@ func main() {
 			}
 			log.Println("!!! ConsumerGroup A error:", err)
 		} else {
-			log.Println("~~~ ConsumerGroup A ok")
+			log.Println("==> ConsumerGroup A end")
 		}
 
 	}()
@@ -78,7 +78,7 @@ func main() {
 	}()
 
 	time.Sleep(15 * time.Second)
-	fmt.Println(">>> Exit")
+	log.Println("<<< Exit")
 
 	handler.Close()
 	if err = group.Close(); err != nil {
@@ -118,6 +118,9 @@ func (cgh *CGHandler) Cleanup(sess sarama.ConsumerGroupSession) (err error) {
 func (cgh *CGHandler) ConsumeClaim(sess sarama.ConsumerGroupSession,
 	claim sarama.ConsumerGroupClaim) (err error) {
 
+	tmpl := "--> msg.Timestamp=%+v, msg.Topic=%v, msg.Partition=%v, msg.Offset=%v\n" +
+		"    key: %q, value: %q\n"
+
 LOOP:
 	for {
 		select {
@@ -125,13 +128,12 @@ LOOP:
 			if msg == nil {
 				break LOOP
 			}
-			fmt.Printf(
-				">>> msg.Timestamp=%+v, msg.Topic=%v, msg.Partition=%v, msg.Offset=%v\n",
-				msg.Timestamp, msg.Topic, msg.Partition, msg.Offset,
+			log.Printf(
+				tmpl,
+				msg.Timestamp, msg.Topic, msg.Partition, msg.Offset, msg.Key, msg.Value,
 			)
-			fmt.Printf("    key: %q, value: %q\n", msg.Key, msg.Value)
 		case <-cgh.ctx.Done():
-			log.Println("~~~ consumer cancel")
+			log.Println("!!! Consumer canceled")
 			break LOOP
 		}
 	}
