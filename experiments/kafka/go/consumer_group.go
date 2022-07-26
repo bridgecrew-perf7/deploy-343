@@ -38,7 +38,7 @@ func main() {
 	if len(os.Args) > 1 {
 		_Addrs = os.Args[1:]
 	}
-	fmt.Println("~~~", _Addrs)
+	fmt.Println("~~~ _Addrs:", _Addrs)
 
 	config = sarama.NewConfig()
 	config.Consumer.Return.Errors = true
@@ -84,7 +84,7 @@ func main() {
 				}
 				log.Println("!!! ConsumerGroup B error:", err)
 			case <-handler.ctx.Done():
-				log.Println("~~~ handler done")
+				log.Println("~~~ CGHandler done")
 				return
 			}
 		}
@@ -131,7 +131,7 @@ func (cgh *CGHandler) Cleanup(sess sarama.ConsumerGroupSession) (err error) {
 func (cgh *CGHandler) ConsumeClaim(sess sarama.ConsumerGroupSession,
 	claim sarama.ConsumerGroupClaim) (err error) {
 
-	tmpl := "--> msg.Timestamp=%+v, msg.Topic=%v, msg.Partition=%v, msg.Offset=%v\n" +
+	tmpl := "<-- msg.Timestamp=%+v, msg.Topic=%v, msg.Partition=%v, msg.Offset=%v\n" +
 		"    key: %q, value: %q\n"
 
 LOOP:
@@ -142,9 +142,12 @@ LOOP:
 				break LOOP
 			}
 			log.Printf(
-				tmpl,
-				msg.Timestamp, msg.Topic, msg.Partition, msg.Offset, msg.Key, msg.Value,
+				tmpl, msg.Timestamp, msg.Topic, msg.Partition, msg.Offset,
+				msg.Key, msg.Value,
 			)
+
+			// TODO: process(msg)
+			sess.MarkMessage(msg, "")
 		case <-cgh.ctx.Done():
 			log.Println("!!! Consumer canceled")
 			break LOOP

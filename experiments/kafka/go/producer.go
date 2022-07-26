@@ -1,9 +1,11 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
-	"os"
+	// "os"
+	"strings"
 
 	"github.com/Shopify/sarama"
 )
@@ -14,22 +16,33 @@ var (
 )
 
 func init() {
-	_Addrs = []string{"127.0.0.1:9093"}
+	// _Addrs = []string{"127.0.0.1:9093"}
 	_Topic = "test"
 }
 
 func main() {
 	var (
-		err error
+		err   error
+		addrs string
+		index int
+		num   int
 
 		config   *sarama.Config
 		producer sarama.AsyncProducer
 	)
 
-	if len(os.Args) > 1 {
-		_Addrs = os.Args[1:]
+	flag.StringVar(&addrs, "addr", "127.0.0.1:9093", "kakfa brokers address seperated by comma")
+	flag.IntVar(&index, "index", 0, "first message index")
+	flag.IntVar(&num, "num", 10, "number of messages")
+	flag.Parse()
+
+	for _, v := range strings.Split(addrs, ",") {
+		v = strings.TrimSpace(v)
+		if v != "" {
+			_Addrs = append(_Addrs, v)
+		}
 	}
-	fmt.Println("~~~", _Addrs)
+	fmt.Println("~~~ _Addrs:", _Addrs)
 
 	config = sarama.NewConfig()
 
@@ -37,8 +50,8 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	for i := 0; i < 3; i++ {
-		msg := fmt.Sprintf("hello, world: %d", i)
+	for i := index; i < index+num; i++ {
+		msg := fmt.Sprintf("hello message: %d", i)
 		log.Println("--> send msg:", msg)
 
 		pmsg := &sarama.ProducerMessage{

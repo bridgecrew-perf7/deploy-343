@@ -8,4 +8,7 @@ docker pull rabbitmq:3-management
 # docker run -d --name rabbitmq_app --publish=5672:5672 --publish=15672:15672 rabbitmq:3-management
 docker-compose -f docker-compose.demo.yaml up -d
 
-# http://localhost:15672, Username: guest, Password: guest
+# management webpage
+# - url: http://localhost:15672
+# - username: guest
+# - password: guest

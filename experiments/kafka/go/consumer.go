@@ -32,7 +32,7 @@ func main() {
 	if len(os.Args) > 1 {
 		_Addrs = os.Args[1:]
 	}
-	fmt.Println("~~~", _Addrs)
+	fmt.Println("~~~ _Addrs:", _Addrs)
 
 	config = sarama.NewConfig()
 	cancel = make(chan struct{})
@@ -65,15 +65,15 @@ func main() {
 	go func() {
 		mc := pconsumer.Messages() // *sarama.ConsumerMessage
 
-		tmpl := "--> msg.Timestamp=%+v, msg.Topic=%v, msg.Partition=%v, msg.Offset=%v\n" +
+		tmpl := "<-- msg.Timestamp=%+v, msg.Topic=%v, msg.Partition=%v, msg.Offset=%v\n" +
 			"    key: %q, value: %q\n"
 
 		for {
 			select {
 			case msg := <-mc:
 				log.Printf(
-					tmpl,
-					msg.Timestamp, msg.Topic, msg.Partition, msg.Offset, msg.Key, msg.Value,
+					tmpl, msg.Timestamp, msg.Topic, msg.Partition, msg.Offset,
+					msg.Key, msg.Value,
 				)
 			case <-cancel:
 				return

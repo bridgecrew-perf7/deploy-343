@@ -7,6 +7,7 @@
   - https://docs.confluent.io/platform/current/tutorials/examples/clients/docs/python.html
   - https://github.com/confluentinc/examples
   - https://github.com/bitnami/containers/tree/main/bitnami/kafka
+  - https://pkg.go.dev/github.com/Shopify/sarama?utm_source=godoc#Config
 - pull docker images:
 ```bash
 docker pull bitnami/kafka:3.2
