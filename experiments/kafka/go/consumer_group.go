@@ -147,7 +147,7 @@ LOOP:
 			)
 
 			// TODO: process(msg)
-			sess.MarkMessage(msg, "")
+			sess.MarkMessage(msg, "consumed-by-d2jvkpn")
 		case <-cgh.ctx.Done():
 			log.Println("!!! Consumer canceled")
 			break LOOP
