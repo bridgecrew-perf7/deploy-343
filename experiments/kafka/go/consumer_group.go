@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"sync"
 	"time"
 
 	"github.com/Shopify/sarama"
@@ -48,52 +49,14 @@ func main() {
 	if config.Version, err = sarama.ParseKafkaVersion(_KafkaVersion); err != nil {
 		log.Fatalln(err)
 	}
-
 	group, err = sarama.NewConsumerGroup(_Addrs, _GroupId, config)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
 	ctx = context.Background()
-	handler = NewCGHandler(ctx)
-
-	go func() {
-		var err error
-		log.Println("==> ConsumerGroup A start")
-		for {
-			err = group.Consume(ctx, []string{_Topic}, handler)
-			if err != nil {
-				if errors.Is(sarama.ErrClosedConsumerGroup, err) {
-					log.Println("!!! ConsumerGroup A closed:", err)
-					return
-				}
-				log.Println("!!! ConsumerGroup A error:", err)
-			} else {
-				log.Println("<== ConsumerGroup A end")
-			}
-
-			if ctx.Err() != nil {
-				return
-			}
-		}
-	}()
-
-	go func() {
-		var err error
-		for {
-			select {
-			case err = <-group.Errors():
-				if errors.Is(sarama.ErrClosedConsumerGroup, err) {
-					log.Println("!!! ConsumerGroup B closed")
-					return
-				}
-				log.Println("!!! ConsumerGroup B error:", err)
-			case <-handler.ctx.Done():
-				log.Println("~~~ CGHandler done")
-				return
-			}
-		}
-	}()
+	handler = NewCGHandler(ctx, group)
+	handler.Consume(_Topic)
 
 	time.Sleep(15 * time.Second)
 	log.Println("<<< Exit")
@@ -106,35 +69,83 @@ func main() {
 }
 
 type CGHandler struct {
+	group  sarama.ConsumerGroup
 	ctx    context.Context
 	cancel context.CancelFunc
+	wg     *sync.WaitGroup
 }
 
-func NewCGHandler(ctx context.Context) (cgh *CGHandler) {
-	cgh = new(CGHandler)
-	cgh.ctx, cgh.cancel = context.WithCancel(ctx)
+func NewCGHandler(ctx context.Context, group sarama.ConsumerGroup) (handler *CGHandler) {
+	handler = new(CGHandler)
+	handler.group = group
+	handler.ctx, handler.cancel = context.WithCancel(ctx)
+	handler.wg = new(sync.WaitGroup)
 
-	return cgh
+	return handler
 }
 
-func (cgh *CGHandler) Close() {
-	cgh.cancel()
+func (handler *CGHandler) Consume(topics ...string) {
+	go func() {
+		var err error
+		log.Println("==> Handler.Consume start")
+		for {
+			err = handler.group.Consume(handler.ctx, topics, handler)
+			if err != nil {
+				if errors.Is(sarama.ErrClosedConsumerGroup, err) {
+					log.Println("!!! Handler.Consume closed:", err)
+					return
+				}
+				log.Println("!!! Handler.Consume error:", err)
+			} else {
+				log.Println("<== Handler.Consume end")
+			}
+
+			if handler.ctx.Err() != nil {
+				return
+			}
+		}
+	}()
 }
 
-func (cgh *CGHandler) Setup(sess sarama.ConsumerGroupSession) (err error) {
-	// TODO
-	log.Println(">>> CGHandler Setup")
+func (handler *CGHandler) Close() {
+	handler.cancel()
+	handler.wg.Wait()
+}
+
+func (handler *CGHandler) Setup(sess sarama.ConsumerGroupSession) (err error) {
+	log.Println(">>> Handler.Setup Start")
+
+	go func() {
+		var err error
+		for {
+			select {
+			case err = <-handler.group.Errors():
+				if errors.Is(sarama.ErrClosedConsumerGroup, err) {
+					log.Println("!!! Handle.Setup closed")
+					return
+				}
+				log.Println("!!! Handle.Setup error:", err)
+			case <-handler.ctx.Done():
+				log.Println("~~~ Handle Setup done")
+				return
+			}
+		}
+	}()
+
 	return nil
 }
 
-func (cgh *CGHandler) Cleanup(sess sarama.ConsumerGroupSession) (err error) {
+func (handler *CGHandler) Cleanup(sess sarama.ConsumerGroupSession) (err error) {
 	// TODO
-	log.Println(">>> CGHandler Cleanup")
+	log.Println(">>> Handler Cleanup")
 	return nil
 }
 
-func (cgh *CGHandler) ConsumeClaim(sess sarama.ConsumerGroupSession,
+func (handler *CGHandler) ConsumeClaim(sess sarama.ConsumerGroupSession,
 	claim sarama.ConsumerGroupClaim) (err error) {
+
+	handler.wg.Add(1)
+	defer handler.wg.Done()
 
 	tmpl := "<-- msg.Timestamp=%+v, msg.Topic=%v, msg.Partition=%v, msg.Offset=%v\n" +
 		"    key: %q, value: %q\n"
@@ -152,9 +163,10 @@ LOOP:
 			)
 
 			// TODO: process(msg)
+			// sess.MarkOffset(msg.Topic, msg.Partition, msg.Offset, "some-metadata")
 			sess.MarkMessage(msg, "consumed-by-d2jvkpn")
-		case <-cgh.ctx.Done():
-			log.Println("!!! Consumer canceled")
+		case <-handler.ctx.Done():
+			log.Println("!!! ConsumeClaim canceled")
 			break LOOP
 		}
 	}
