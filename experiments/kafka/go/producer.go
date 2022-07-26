@@ -11,13 +11,15 @@ import (
 )
 
 var (
-	_Addrs []string
-	_Topic string
+	_Addrs        []string
+	_Topic        string
+	_KafkaVersion string
 )
 
 func init() {
 	// _Addrs = []string{"127.0.0.1:9093"}
 	_Topic = "test"
+	_KafkaVersion = "3.2.0"
 }
 
 func main() {
@@ -45,6 +47,9 @@ func main() {
 	fmt.Println("~~~ _Addrs:", _Addrs)
 
 	config = sarama.NewConfig()
+	if config.Version, err = sarama.ParseKafkaVersion(_KafkaVersion); err != nil {
+		log.Fatalln(err)
+	}
 
 	if producer, err = sarama.NewAsyncProducer(_Addrs, config); err != nil {
 		log.Fatalln(err)

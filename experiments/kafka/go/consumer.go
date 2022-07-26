@@ -10,11 +10,13 @@ import (
 )
 
 var (
-	_Addrs []string
+	_KafkaVersion string
+	_Addrs        []string
 )
 
 func init() {
 	_Addrs = []string{"127.0.0.1:9093"}
+	_KafkaVersion = "3.2.0"
 }
 
 func main() {
@@ -35,6 +37,10 @@ func main() {
 	fmt.Println("~~~ _Addrs:", _Addrs)
 
 	config = sarama.NewConfig()
+	if config.Version, err = sarama.ParseKafkaVersion(_KafkaVersion); err != nil {
+		log.Fatalln(err)
+	}
+
 	cancel = make(chan struct{})
 
 	if consumer, err = sarama.NewConsumer(_Addrs, config); err != nil {

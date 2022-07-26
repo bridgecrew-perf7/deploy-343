@@ -14,15 +14,17 @@ import (
 // TODO: ack
 
 var (
-	_Addrs   []string
-	_GroupId string
-	_Topic   string
+	_KafkaVersion string
+	_Addrs        []string
+	_GroupId      string
+	_Topic        string
 )
 
 func init() {
 	_Addrs = []string{"127.0.0.1:9093"}
 	_GroupId = "default"
 	_Topic = "test"
+	_KafkaVersion = "3.2.0"
 }
 
 func main() {
@@ -43,6 +45,9 @@ func main() {
 	config = sarama.NewConfig()
 	config.Consumer.Return.Errors = true
 	config.Consumer.Offsets.Initial = sarama.OffsetOldest
+	if config.Version, err = sarama.ParseKafkaVersion(_KafkaVersion); err != nil {
+		log.Fatalln(err)
+	}
 
 	group, err = sarama.NewConsumerGroup(_Addrs, _GroupId, config)
 	if err != nil {
