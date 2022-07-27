@@ -8,6 +8,7 @@
   - https://github.com/confluentinc/examples
   - https://github.com/bitnami/containers/tree/main/bitnami/kafka
   - https://pkg.go.dev/github.com/Shopify/sarama?utm_source=godoc#Config
+- wrapped kafka clients: https://github.com/d2jvkpn/go-web/tree/dev/pkg/kafka
 - pull docker images:
 ```bash
 docker pull bitnami/kafka:3.2
