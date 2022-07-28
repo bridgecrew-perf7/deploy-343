@@ -12,5 +12,7 @@ docker-compose -f docker-compose.zookeeper.yaml up -d
 addrs=127.0.0.1:9093
 
 kafka-console-producer.sh --broker-list $addrs --topic test
+# enter messages
+# ctrl+d exit
 
 kafka-console-consumer.sh --bootstrap-server $addrs --topic test --from-beginning
