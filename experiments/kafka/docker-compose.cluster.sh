@@ -8,6 +8,9 @@ docker-compose -f docker-compose.cluster.yaml up -d
 exit
 
 ###
+# can't access through port binding
+
+###
 docker exec zookeeper zkCli.sh ls /brokers/ids
 docker exec zookeeper zkCli.sh get /brokers/ids/1
 
