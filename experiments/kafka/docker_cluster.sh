@@ -4,7 +4,7 @@ _wd=$(pwd)
 _path=$(dirname $0 | xargs -i readlink -f {})
 
 ###
-docker-compose -f docker-compose.cluster.yaml up -d
+docker-compose -f docker_cluster.yaml up -d
 exit
 
 ###
