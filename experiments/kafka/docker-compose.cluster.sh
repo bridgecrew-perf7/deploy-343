@@ -5,6 +5,7 @@ _path=$(dirname $0 | xargs -i readlink -f {})
 
 ###
 docker-compose -f docker-compose.cluster.yaml up -d
+exit
 
 ###
 docker exec zookeeper zkCli.sh ls /brokers/ids
