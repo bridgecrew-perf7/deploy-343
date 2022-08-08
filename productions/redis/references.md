@@ -11,6 +11,8 @@ cat > configs/redis.conf <<EOF
 dbfilename redis-dump.rdb
 aof-use-rdb-preamble yes
 proto-max-bulk-len 32mb
+io-threads 4
+io-threads-do-reads yes
 dir /data
 EOF
 
