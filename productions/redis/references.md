@@ -26,7 +26,8 @@ config get dir
 config get *
 
 bgsave
-save 300 10
+# seconds words
+save 30 10
 
 info persistence
 
