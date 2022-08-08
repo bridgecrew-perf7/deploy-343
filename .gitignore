@@ -12,5 +12,7 @@ target
 
 *.out
 *.log
+*.rdb
+
 logs/
 configs/
