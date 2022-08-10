@@ -2,6 +2,7 @@
 - https://raw.githubusercontent.com/redis/redis/7.0/redis.conf
 - https://redis.io/docs/manual/persistence/
 - https://redis.io/commands/acl-setuser/
+- https://geshan.com.np/blog/2022/01/redis-docker/
 
 #### Setup
 ``` bash
