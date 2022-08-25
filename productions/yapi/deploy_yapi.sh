@@ -14,14 +14,14 @@ mkdir -p ./mongo/data/db
 
 ####
 docker run --detach         \
-  --name=yapi_mongo_service \
+  --name=yapi_db            \
   --restart=always          \
   --publish=${MONGO_Port}:27017        \
   --volume=$PWD/mongo/data/db:/data/db \
    mongo:4
 
 docker run -it --rm               \
-  --link yapi_mongo_service:mongo \
+  --link yapi_db:mongo \
   --entrypoint=npm                \
   --workdir=/api/vendors          \
   registry.cn-hangzhou.aliyuncs.com/anoy/yapi \

@@ -2,10 +2,10 @@ version: '3'
 
 services:
   mongo:
-    image: mongo:4
+    image: mongo:5
     container_name: yapi_db
     restart: always
-    volumes: ["./wk_data/mongo:/data/db"]
+    volumes: ["./mongo:/data/db"]
     networks: ["yapi"]
 
   web:
@@ -23,5 +23,6 @@ services:
 networks:
   yapi: {name: "yapi", driver: "bridge", external: true}
 
+# docker exec yapi_web npm run install-server
 # default account: admin@admin.com
 # default password: ymfe.org
