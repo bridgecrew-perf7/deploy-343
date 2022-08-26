@@ -7,3 +7,17 @@ envsubst < $(dirname $0)/deployment.yaml > docker-compose.yaml
 
 docker-compose pull
 docker-compose up -d
+
+exit
+
+docker exec -it mysql_db mysql -u root -p
+
+```mysql
+
+USE mysql;
+SELECT user, host, account_locked FROM user;
+
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'NEWPASSWORD';
+
+FLUSH PRIVILEGES;
+```
