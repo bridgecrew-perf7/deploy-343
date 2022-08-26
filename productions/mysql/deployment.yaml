@@ -5,19 +5,17 @@ services:
     image: mysql:8
     container_name: mysql_db
     restart: always
-
-    # network_mode: bridge
     networks: ["mysql"]
+    # network_mode: bridge
     ports: ["127.0.0.1:${PORT}:3306"]
 
     volumes:
-    - $HOME/Work/docker/mysql/my.cnf:/etc/mysql/my.cnf
-    - $HOME/Work/docker/mysql/data:/var/lib/mysql/
-    - $HOME/Work/docker/mysql:/mnt/work
-
+    # - $HOME/Work/docker/mysql/data:/var/lib/mysql/
+    - ./data/mysql:/var/lib/mysql/
+    - ./data/mysql.cnf:/etc/mysql/my.cnf
     environment:
     - TZ=Asia/Shanghai
     - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
 
 networks:
-  mysql: {name: "mysql", driver: "bridge"}
+  mysql: {name: "mysql", driver: "bridge", external: false}
