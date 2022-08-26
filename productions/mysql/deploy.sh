@@ -18,6 +18,7 @@ USE mysql;
 SELECT user, host, account_locked FROM user;
 
 ALTER USER 'root'@'localhost' IDENTIFIED BY 'NEWPASSWORD';
+ALTER USER 'root'@'%' IDENTIFIED BY 'NEWPASSWORD';
 
 FLUSH PRIVILEGES;
 ```
