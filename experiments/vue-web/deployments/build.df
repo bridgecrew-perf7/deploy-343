@@ -3,7 +3,6 @@ FROM node:16-alpine AS builder
 LABEL stage=vue-web_builder
 
 ARG mode=${mode}
-ENV TZ="Asia/Shanghai"
 
 WORKDIR /opt/vue-web
 
@@ -18,8 +17,6 @@ RUN node_modules/.bin/vue-cli-service build --mode $mode
 
 ####
 FROM nginx:1.20-alpine
-
-ENV TZ="Asia/Shanghai"
 
 WORKDIR /opt/vue-web
 COPY --from=builder /opt/vue-web/dist ./dist
