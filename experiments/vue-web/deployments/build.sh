@@ -13,7 +13,7 @@ image="$name:$tag"
 echo ">>> building image: $image..."
 
 function onExit {
-    git checkout main
+    git checkout master # git checkout dev
 }
 trap onExit EXIT
 

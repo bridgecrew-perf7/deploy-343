@@ -6,8 +6,10 @@ ARG mode=${mode}
 ENV TZ="Asia/Shanghai"
 
 WORKDIR /opt/vue-web
-ADD babel.config.js jsconfig.json package.json package-lock.json vue.config.js ./
-ADD .env.dev  .env.local .env.prod .env.test ./
+
+ADD babel.config.js jsconfig.json package.json package-lock.json vue.config.js \
+    .env.dev .env.local .env.prod .env.test ./
+
 COPY public/   ./public
 COPY src/      ./src
 
