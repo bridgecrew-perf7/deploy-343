@@ -13,7 +13,7 @@ exit
 docker exec -it mysql_db mysql -u root -p
 
 ```mysql
-
+--
 USE mysql;
 SELECT user, host, account_locked FROM user;
 
@@ -21,4 +21,9 @@ ALTER USER 'root'@'localhost' IDENTIFIED BY 'NEWPASSWORD';
 ALTER USER 'root'@'%' IDENTIFIED BY 'NEWPASSWORD';
 
 FLUSH PRIVILEGES;
+
+--
+CREATE DATABASE IF NOT EXISTS my_app DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+
+USE my_app;
 ```
