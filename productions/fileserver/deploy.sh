@@ -10,3 +10,18 @@ _path=$(dirname $0 | xargs -i readlink -f {})
 export PORT="8100"
 envsubst < ${_path}/deploy.yaml > docker-compose.yaml
 docker-compose up -d
+
+exit
+
+echo -n 'foo:' >> htpasswd
+openssl passwd >> htpasswd
+# openssl passwd -apr1
+
+fileserver.cnf
+```text
+server {
+	# auth
+	auth_basic "Restricted site";
+	auth_basic_user_file /opt/nginx/htpasswd;
+}
+```
