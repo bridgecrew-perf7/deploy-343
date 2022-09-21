@@ -9,9 +9,9 @@ tar -czf $(date +"%s_%F")_gitlab_config.tgz config
 
 #### 2. backup data
 # docker exec -it gitlab_app bash
-docker exec gitlab_app gitlab-ctl stop
+# docker exec gitlab_app gitlab-ctl stop
 # docker exec gitlab_app gitlab-rake gitlab:backup:create STRATEGY=copy
-docker exec gitlab_app gitlab-backup create
+docker exec gitlab_app gitlab-backup create STRATEGY=copy
 
 docker exec gitlab_app ls -lart /var/opt/gitlab/backups
 ls backups

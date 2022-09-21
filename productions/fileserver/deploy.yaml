@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  fileserver:
+    image: fileserver
+    container_name: fileserver_app
+    restart: always
+    network_mode: bridge
+    ports: ["${PORT}:80"]
+    volumes:
+    - ./static/:/static
+    environment: ["PORT=80"]
