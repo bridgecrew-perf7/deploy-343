@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  nginx-fileserver:
+    image: registry.cn-shanghai.aliyuncs.com/d2jvkpn/nginx-fileserver:latest
+    container_name: nginx-fileserver_app
+    restart: always
+    network_mode: bridge
+    ports: ["${PORT}:80"]
+    volumes:
+    - ./static/:/opt/nginx-fileserver/static
+    # - ./htpasswd:/opt/nginx/htpasswd
+    environment: ["PORT=80"]

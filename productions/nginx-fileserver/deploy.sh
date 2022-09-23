@@ -5,7 +5,7 @@ _path=$(dirname $0 | xargs -i readlink -f {})
 
 # https://www.yanxurui.cc/posts/server/2017-03-21-NGINX-as-a-file-server/
 
-# docker build -f Dockerfile -t fileserver .
+# docker build -f Dockerfile -t registry.cn-shanghai.aliyuncs.com/d2jvkpn/nginx-fileserver .
 
 export PORT="8100"
 envsubst < ${_path}/deploy.yaml > docker-compose.yaml
