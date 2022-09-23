@@ -6,11 +6,9 @@ ARG mode=${mode}
 
 WORKDIR /opt/vue-web
 
-ADD babel.config.js jsconfig.json package.json package-lock.json vue.config.js \
-    .env.dev .env.local .env.prod .env.test ./
-
-COPY public/   ./public
-COPY src/      ./src
+ADD  *.js *.json .env.*  ./
+COPY public/  ./public
+COPY src/     ./src
 
 RUN npm install --registry=https://registry.npm.taobao.org &> /dev/null
 RUN node_modules/.bin/vue-cli-service build --mode $mode
