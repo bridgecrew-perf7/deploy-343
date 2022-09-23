@@ -5,7 +5,7 @@ set -eu -o pipefail
 export HTTP_Port=$1
 td=$HOME/Work/docker/excalidraw
 mkdir -p $td
-envsubst < deployment.yaml > $td/docker-compose.yaml
+envsubst < deploy.yaml > $td/docker-compose.yaml
 
 ####
 cd $td
