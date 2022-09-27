@@ -22,3 +22,10 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### .env.local
+```bash
+BRANCH="dev"
+VUE_APP_BASE_API="http://127.0.0.1:3011"
+PORT=3021
+```

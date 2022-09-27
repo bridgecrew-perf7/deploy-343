@@ -3,9 +3,17 @@ set -eu -o pipefail
 _wd=$(pwd)
 _path=$(dirname $0 | xargs -i readlink -f {})
 
-branch="$1" # git branch
-mode="$2"   # load .env.${mode}
+# branch="$1" # git branch
+mode="$1"   # load .env.${mode}
 tag=$mode   # image tag
+
+awk '!/^#/{sub(" += +", "=", $0); print "export "$0}' .env.${mode} > ./config.env
+. ./config.env
+
+branch=$(printenv BRANCH)
+build_vendor=$(printenv BUILD_Vendor || true)
+
+echo "Mode: $mode, BRANCH: $branch"
 
 #
 name="registry.cn-shanghai.aliyuncs.com/d2jvkpn/vue-web"
@@ -19,17 +27,34 @@ trap onExit EXIT
 
 
 git checkout $branch
-echo ">>> git pull..."
-git pull --no-edit
 
+[[ "$build_vendor" != "true" ]] && {
+    echo ">>> git pull..."
+    git pull --no-edit
+}
 
 #
-docker build --no-cache -f ${_path}/build.df --build-arg=mode=$mode -t $image .
-  
+df=${_path}/build.vendor.df
+[[ "$build_vendor" == "true" ]] && df=${_path}/build.vendor.df
+
+if [[ "$build_vendor" != "true" ]]; then
+    echo ">>> Pull base images..."
+    for base in $(awk '/^FROM/{print $2}' $df); do
+        docker pull --quiet $base
+        bn=$(echo $base | awk -F ":" '{print $1}')
+        if [[ -z "$bn" ]]; then continue; fi
+        docker images --filter "dangling=true" --quiet "$bn" | xargs -i docker rmi {}
+    done &> /dev/null
+fi
+
+docker build --no-cache -f $df --build-arg=mode=$mode -t $image .
+
 docker image prune --force --filter label=stage=vue-web_builder &> /dev/null
 for img in $(docker images --filter=dangling=true $name --quiet); do
     docker rmi $img &> /dev/null
 done
 
-echo ">>> pushing image: $image"
-docker push $image
+[[ "$build_vendor" != "true" ]] && {
+    echo ">>> pushing image: $image"
+    docker push $image
+}

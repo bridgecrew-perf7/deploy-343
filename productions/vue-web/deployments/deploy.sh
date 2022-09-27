@@ -3,9 +3,10 @@ set -eu -o pipefail
 _wd=$(pwd)
 _path=$(dirname $0 | xargs -i readlink -f {})
 
-TAG="$1"
-APP_ENV="$2"
-PORT="$3"
+# TAG="$1"
+APP_ENV="$1"
+TAG=$APP_ENV
+PORT="$2"
 
 #### deploy
 export TAG="${TAG}" APP_ENV="${APP_ENV}" PORT="${PORT}"
