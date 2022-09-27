@@ -3,6 +3,7 @@ FROM node:16-alpine AS builder
 LABEL stage=vue-web_builder
 
 ARG mode=${mode}
+ARG VUE_APP_BuildTime=${VUE_APP_BuildTime}
 
 WORKDIR /opt/vue-web
 

@@ -47,7 +47,10 @@ if [[ "$build_vendor" != "true" ]]; then
     done &> /dev/null
 fi
 
-docker build --no-cache -f $df --build-arg=mode=$mode -t $image .
+docker build --no-cache -f $df \
+  --build-arg=mode=$mode       \
+  --build-arg=VUE_APP_BuildTime=$(date +'%FT%T%:z') \
+  -t $image .
 
 docker image prune --force --filter label=stage=vue-web_builder &> /dev/null
 for img in $(docker images --filter=dangling=true $name --quiet); do
